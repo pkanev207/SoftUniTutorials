@@ -1,17 +1,21 @@
-const { verifyToken } = require('../services/userService');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET } = require('../config/env');
+// const { verifyToken } = require('../services/authService');
 
-module.exports = () =>  (req, res, next) => {
+module.exports = () => (req, res, next) => {
     const token = req.cookies.token;
+    console.log('From userSession >>>');
 
-    if (token) {
+    if (token && Object.keys(token) > 0) {
         try {
-            const userData =  verifyToken(token);
+            // const userData = verifyToken(token);
+            const userData = jwt.verify(token, JWT_SECRET);
             console.log('Read successful, user >>>', userData);
             req.user = userData;
             res.locals.user = userData;
             res.locals.hasUser = true;
         } catch (err) {
-            // console.log('Invalid token');
+            console.log('Invalid token');
             res.clearCookie('token');
             res.redirect('/auth/login');
             return;

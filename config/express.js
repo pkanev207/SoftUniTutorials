@@ -2,7 +2,7 @@ const express = require('express');
 const { create } = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const userSession = require('../middleware/userSession');
-const trimBody = require('../middleware/trimBody');
+// const trimBody = require('../middleware/trimBody');
 
 
 module.exports = (app) => {
@@ -14,5 +14,5 @@ module.exports = (app) => {
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser()); // secret can be set here
     app.use(userSession());
-    app.use(trimBody('password'));
+    // app.use(trimBody('password'));
 };

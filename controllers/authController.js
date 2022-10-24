@@ -1,6 +1,6 @@
 const router = require("./homeController");
 
-const userService = require('../services/userService');
+const userService = require('../services/authService');
 const { parseError } = require("../util/errorParser");
 const { isUser, isGuest } = require('../middleware/guards');
 // const PASSWORD_PATTERN = /^[a-zA-Z0-9]{5,}$/;
@@ -9,7 +9,8 @@ router.get('/register', isGuest(), (req, res) => {
     res.render('register', { title: 'Register Page' });
 });
 
-router.post('/register', isGuest(), (req, res) => {
+router.post('/register', isGuest(), async (req, res) => {
+    console.log(req.body);
     try {
         if (req.body.username.trim() == '' || req.body.password.trim() == '') {
             throw new Error('All fields are required!');
@@ -23,9 +24,9 @@ router.post('/register', isGuest(), (req, res) => {
             throw new Error('Passwords don\'t match!');
         }
 
-        const token = userService.register(req.body.username, req.body.password);
+        const token = await userService.register(req.body.username, req.body.password);
 
-        res.cookie('token', token, { httpOnly: true });
+        res.cookie('token', token);
         res.redirect('/'); // TODO check for redirect requirement
     } catch (err) {
         console.error(err);
