@@ -1,6 +1,6 @@
 function isUser() {
     return function (req, res, next) {
-        if (req.user) {
+        if (req.user && Object.keys(req.user).length > 0) {
             next();
         } else {
             res.redirect('/auth/login');
@@ -10,7 +10,9 @@ function isUser() {
 
 function isGuest() {
     return function (req, res, next) {
-        if (req.user) {
+        console.log('From Guards isGuest >>>');
+        console.log(req.body);
+        if (req.user && Object.keys(req.user).length == 0) {
             res.redirect('/'); // TODO check redirect requirements
         } else {
             next();

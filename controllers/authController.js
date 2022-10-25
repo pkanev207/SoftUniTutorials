@@ -26,7 +26,7 @@ router.post('/register', isGuest(), async (req, res) => {
 
         const token = await userService.register(req.body.username, req.body.password);
 
-        res.cookie('token', token);
+        res.cookie('token', token, { httpOnly: true });
         res.redirect('/'); // TODO check for redirect requirement
     } catch (err) {
         console.error(err);
@@ -48,14 +48,14 @@ router.get('/login', isGuest(), (req, res) => {
 
 router.post('/login', isGuest(), async (req, res) => {
     try {
-        if (req.body.username.trim() == '' || req.body.password.trim() == ''
-        ) {
+        if (req.body.username.trim() == '' || req.body.password.trim() == '') {
             throw new Error('All fields are required!');
         }
 
         const token = await userService.login(req.body.username, req.body.password);
-
-        res.cookie('token', token, { httpOnly: true });
+        console.log('From controllers >>>');
+        console.log(token);
+        res.cookie('token', token);
         res.redirect('/'); // TODO check for redirect requirement
     } catch (err) {
         console.error(err);
@@ -66,7 +66,7 @@ router.post('/login', isGuest(), async (req, res) => {
             title: 'Login Page',
             errors,
             // data: { username: req.body.username },
-            data: req.body
+            data: { ...req.body }
         });
     }
 });

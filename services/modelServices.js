@@ -1,36 +1,36 @@
 // TODO replace with actual model
-const Model = require('../models/Model');
+const Tutorial = require('../models/Tutorial');
 // const User = require('../models/User');
 
 async function getAll() {
-    return Model.find({}).lean();
+    return Tutorial.find({}).lean();
 }
 
 async function getById(id) {
-    return Model.findById(id).lean();
+    return Tutorial.findById(id).lean();
 }
 
 async function getModelAndUsers(id) {
     // TODO replace with actual fields to be populated
-    return Model.findById(id).populate('field1').populate('field2').lean();
+    return Tutorial.findById(id).populate('field1').populate('field2').lean();
 }
 
 async function create(obj) {
-    const result = new Model(obj);
+    const result = new Tutorial(obj);
     await result.save();
     return result;
 }
 
 async function update(id, obj) {
     // TODO replace with actual fields
-    const existing = await Model.findById(id);
+    const existing = await Tutorial.findById(id);
     existing.something = obj.something;
 
     await existing.save();
 }
 
 async function del(id) {
-    await Model.findByIdAndDelete(id);
+    await Tutorial.findByIdAndDelete(id);
 }
 
 // for joining two models

@@ -6,7 +6,7 @@ module.exports = () => (req, res, next) => {
     const token = req.cookies.token;
     console.log('From userSession >>>');
 
-    if (token && Object.keys(token) > 0) {
+    if (token && Object.keys(token).length > 0) {
         try {
             // const userData = verifyToken(token);
             const userData = jwt.verify(token, JWT_SECRET);

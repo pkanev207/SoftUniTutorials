@@ -13,7 +13,7 @@ const tutorialSchema = new Schema({
         type: String,
         required: true,
         minlength: [20, 'The description should be at least 20 characters long!'],
-        maxlength: [50, 'Description should be no more than 50 symbols!'],
+        // maxlength: [50, 'Description should be no more than 50 symbols!'],
     },
     imageUrl: {
         type: String,

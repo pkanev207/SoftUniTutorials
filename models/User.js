@@ -16,7 +16,6 @@ const userSchema = new Schema({
     },
     hashedPassword: { type: String, required: true },
     enrolled: { type: [ObjectId], ref: 'Tutorial', default: [] },
-
 });
 
 userSchema.index({ username: 1 }, {

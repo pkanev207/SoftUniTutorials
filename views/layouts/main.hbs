@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="UTF-8">
-        <title>JS Back-End - Exam - November 2020</title>
+        <title>{{title}}</title>
         <link href="/static/css/site.css" type="text/css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -15,23 +15,23 @@
                 <a class="navbar-brand" href="/">Tutorials</a>
 
                 <ul class="navbar-nav ml-auto">
+                    {{#if hasUser}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Welcome, {{user.username}}</a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Welcome, {{username}}</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/logout">Logout</a>
+                        </li>
+                    {{else}}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/login">Login</a>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/logout">Logout</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/login">Login</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/register">Register</a>
-                    </li>
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/register">Register</a>
+                        </li>
+                    {{/if}}
                 </ul>
             </nav>
 
@@ -44,9 +44,7 @@
             {{/if}}
 
             <main>
-
                 {{{body}}}
-
             </main>
 
             <footer class="page-footer font-small">
