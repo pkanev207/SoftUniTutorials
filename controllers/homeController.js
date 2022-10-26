@@ -20,7 +20,9 @@ router.get('/', async (req, res) => {
             course.toShow = date1 + ' ' + date2;
         }
     } else {
-        courses = tutorials.sort((a, b) => b.participants.length - a.participants.length);
+        courses = tutorials
+            .sort((a, b) => b.participants.length - a.participants.length)
+            .slice(0, 3);
 
         for (const course of courses) {
             course.toShow = course.participants.length;

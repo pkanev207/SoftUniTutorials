@@ -1,3 +1,5 @@
+const { getModelAndUsers } = require("../services/modelServices");
+
 function isUser() {
     return function (req, res, next) {
         if (req.user && Object.keys(req.user).length > 0) {
@@ -20,19 +22,31 @@ function isGuest() {
     };
 }
 
-
-
 function isOwner() {
-    // return function (req, res, next) {
-    //     // TODO change property name to match collection
-    //     const userId = req.session.user?._id;
-    //     if (res.locals.data.owner == userId) {
-    //         next();
-    //     } else {
-    //         res.redirect('/login');
-    //     }
-    // };
+    return async function (req, res, next) {
+        const existing = await getModelAndUsers(req.params.id);
+
+        if (req.user.id != existing.owner._id) {
+            res.clearCookie('token');
+            return res.redirect('/auth/login');
+        } else {
+            next();
+        }
+    };
 }
+
+
+// function isOwner() {
+// return function (req, res, next) {
+//     // TODO change property name to match collection
+//     const userId = req.session.user?._id;
+//     if (res.locals.data.owner == userId) {
+//         next();
+//     } else {
+//         res.redirect('/login');
+//     }
+// };
+// }
 
 module.exports = {
     isUser,
