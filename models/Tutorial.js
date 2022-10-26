@@ -28,6 +28,7 @@ const tutorialSchema = new Schema({
     duration: { type: String, required: true },
     createdAt: { type: String, required: true },
     participants: { type: [ObjectId], ref: 'User', default: [] },
+    owner: { type: ObjectId, ref: 'User', required: true }
 });
 
 tutorialSchema.index({ title: 1 }, {

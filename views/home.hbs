@@ -1,6 +1,5 @@
-<h1 class="text-center">Courses</h1>
-
 {{#if hasUser}}
+    <h1 class="text-center">Courses</h1>
     <section>
         <a href="/course/create" class="btn btn-warning ">Create Course</a>
         <form class="search float-right">
@@ -9,49 +8,48 @@
             <input type="submit" class="btn btn-primary" value="Search">
         </form>
     </section>
-{{/if}}
 
-<div class="container mt-3">
-    <div class="row ">
-        <div class="card-deck d-flex justify-content-center">
-            <div class="card mb-4">
-                <img class="card-img-top"
-                    src="https://1.bp.blogspot.com/-pdqcVeIQp64/XDX7TzdRdcI/AAAAAAAAM8E/ZmGuB6caZqIGmEflGHcj3zgXJJrmqRLdgCLcBGAs/w1200-h630-p-k-no-nu/Free%2BCourses%2Bto%2Blearn%2BJavaScript.jpg"
-                    alt="Card image cap" width="400">
-                <div class="card-body">
-                    <h4 class="card-title">JavaScript</h4>
-                </div>
-                <div class="card-footer">
-                    <a href=""><button type="button" class="btn btn-primary">Details</button></a>
-                    <small class="float-right">Date...</small>
-                </div>
-            </div>
+    {{#if courses}}
+        <div class="container mt-3">
+            <div class="row ">
+                <div class="card-deck d-flex justify-content-center">
 
-            <div class="card mb-4">
-                <img class="card-img-top" src="https://colorlib.com/wp/wp-content/uploads/sites/2/angular-logo.png"
-                    alt="Card image cap" width="400">
-                <div class="card-body">
-                    <h4 class="card-title">Angular</h4>
-                </div>
-                <div class="card-footer">
-                    <a href=""><button type="button" class="btn btn-primary">Details</button></a>
-                    <small class="float-right">Date...</small>
-                </div>
-            </div>
+                    {{#each courses }}
+                        {{> courseCard}}
+                    {{/each}}
 
-            <div class="card mb-4">
-                <img class="card-img-top"
-                    src="https://www.freecodecamp.org/news/content/images/size/w2000/2020/03/gpython.jpg"
-                    alt="Card image cap" width="400">
-                <div class="card-body">
-                    <h4 class="card-title">Python</h4>
-                </div>
-                <div class="card-footer">
-                    <a href=""><button type="button" class="btn btn-primary">Details</button></a>
-                    <small class="float-right">Date...</small>
                 </div>
             </div>
         </div>
+    {{else}}
+        <h3 class="text-center">No courses...</h3>
+    {{/if}}
+
+{{else}}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Tutorials</h1>
+            <p class="lead">Start Self-Learning Today: Be the best Developer in the company</p>
+        </div>
     </div>
-</div>
-<h3 class="text-center">No courses...</h3>
+
+    <div>
+        <h1 class="text-center">Top Courses</h1>
+        <div class="container mt-3">
+            <div class="row d-flex justify-content-center">
+
+                {{#if courses}}
+                    <div class="card-deck">
+                        {{#each courses }}
+                            {{> courseCardNoUser}}
+                        {{/each}}
+                    </div>
+                {{else}}
+                    <h3 class="text-center">No courses...</h3>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+
+{{/if}}

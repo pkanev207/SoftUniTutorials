@@ -12,7 +12,7 @@ async function getById(id) {
 
 async function getModelAndUsers(id) {
     // TODO replace with actual fields to be populated
-    return Tutorial.findById(id).populate('field1').populate('field2').lean();
+    return Tutorial.findById(id).populate('owner').populate('participants').lean();
 }
 
 async function create(obj) {

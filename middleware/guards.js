@@ -22,8 +22,6 @@ function isGuest() {
 
 
 
-
-
 function isOwner() {
     // return function (req, res, next) {
     //     // TODO change property name to match collection
