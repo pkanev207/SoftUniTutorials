@@ -28,8 +28,9 @@ async function update(id, obj) {
     existing.description = obj.description;
     existing.imageUrl = obj.imageUrl;
     existing.duration = obj.duration;
-
     return await existing.save();
+
+    // return Tutorial.updateOne({ _id: id }, { $set: obj }, { runValidators: true });
 }
 
 async function join(modelId, userId) {
@@ -46,6 +47,10 @@ async function join(modelId, userId) {
 
     if (user.enrolled.includes(modelId)) {
         throw new Error('User has already enrolled!');
+    }
+
+    if (course.owner == user._id) {
+        throw new Error('The user is the author of the course and therefore can NOT be enrolled!!!');
     }
 
     course.participants.push(userId);

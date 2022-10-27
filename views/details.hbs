@@ -15,10 +15,12 @@
             {{#if course.isAuthor}}
                 <a class="btn btn-danger" href="/course/delete/{{course._id}}">Delete</a>
                 <a class="btn btn-warning" href="/course/edit/{{course._id}}">Edit</a>
-
             {{else}}
-                <a class="btn btn-primary" href="/course/enroll/{{course._id}}">Enroll</a>
-                <span class="enrolled-span">You are already enrolled</span>
+                {{#if course.isParticipant}}
+                    <span class="enrolled-span">You are already enrolled</span>
+                {{else}}
+                    <a class="btn btn-primary" href="/course/enroll/{{course._id}}">Enroll</a>
+                {{/if}}
             {{/if}}
         </div>
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const courseServices = require('../services/modelServices');
-const { parseError } = require('../util/errorParser');
+const { parseError,  } = require('../util/errorParser');
 const { isUser, isOwner } = require('../middleware/guards');
 
 
@@ -39,10 +39,10 @@ router.post('/create', isUser(), (req, res) => {
 
 router.get('/details/:id', isUser(), async (req, res) => {
     const course = await courseServices.getModelAndUsers(req.params.id);
-    console.log('From detailsController >>>');
+    // console.log('From detailsController >>>');
 
     course.isParticipant = false;
-    
+
     course.participants.forEach(obj => {
         if (obj._id == req.user.id) { course.isParticipant = true; }
     });
@@ -53,7 +53,6 @@ router.get('/details/:id', isUser(), async (req, res) => {
         course.isAuthor = false;
     }
 
-    console.log(course);
     res.render('details', { title: 'Details Page', course });
 });
 
@@ -71,6 +70,11 @@ router.get('/edit/:id', isUser(), async (req, res) => {
 
 
 router.post('/edit/:id', isUser(), isOwner(), async (req, res) => {
+    const course = req.body;
+    course._id = req.params.id;
+    console.log('From postController >>>');
+    console.log(course);
+
     try {
         await courseServices.update(req.params.id, req.body);
 
@@ -78,31 +82,26 @@ router.post('/edit/:id', isUser(), isOwner(), async (req, res) => {
     } catch (err) {
         console.error(err);
         const errors = parseError(err);
-        res.render('edit', { title: existing.title, errors });
+        // res.render('/edit/' + req.params.id, { title: 'EDIT AGAIN!', course, errors });
+        res.render('edit', {
+            title: 'EDIT AGAIN!',
+            errors,
+            // data: { username: req.body.username },
+            ...req.body,
+        });
     }
 });
 
 
 router.get('/enroll/:id', isUser(), async (req, res) => {
-    console.log('From enrollController >>>');
-    console.log(req.params.id);
-    console.log(req.user);
+    // console.log('From enrollController >>>');
     try {
         courseServices.join(req.params.id, req.user.id);
     } catch (err) {
         console.error(err);
-        // const errors = parseError(err);
     } finally {
-        res.redirect('/course/details' + req.params.id);
+        res.redirect('/course/details/' + req.params.id);
     }
-
-    // try {
-    //     await joinTrip(id, req.session.user._id);
-    // } catch (err) {
-    //     console.error(err);
-    // } finally {
-    //     res.redirect('/trips/' + id);
-    // }
 });
 
 
