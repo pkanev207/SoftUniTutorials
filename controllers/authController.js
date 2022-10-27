@@ -10,7 +10,7 @@ router.get('/register', isGuest(), (req, res) => {
 });
 
 router.post('/register', isGuest(), async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     try {
         if (req.body.username.trim() == '' || req.body.password.trim() == '') {
             throw new Error('All fields are required!');
@@ -53,8 +53,8 @@ router.post('/login', isGuest(), async (req, res) => {
         }
 
         const token = await userService.login(req.body.username, req.body.password);
-        console.log('From controllers >>>');
-        console.log(token);
+        // console.log('From loginController >>>');
+        // console.log(token);
         res.cookie('token', token);
         res.redirect('/'); // TODO check for redirect requirement
     } catch (err) {
