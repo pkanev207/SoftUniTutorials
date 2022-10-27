@@ -15,6 +15,8 @@ async function getModelAndUsers(id) {
     return Tutorial.findById(id).populate('owner').populate('participants').lean();
 }
 
+// return Model.find({}).sort({ createdAt: 1 }).lean();
+
 async function create(obj) {
     const result = new Tutorial(obj);
     await result.save();
