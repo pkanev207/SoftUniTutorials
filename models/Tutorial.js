@@ -1,6 +1,6 @@
 const { Schema, model, Types: { ObjectId } } = require('mongoose');
 
-const URL_PATTERN = /^https?:\/\/.+$/;
+const URL_PATTERN = /^https?:\/\/.+$/i;
 
 const tutorialSchema = new Schema({
     title: {
@@ -30,6 +30,8 @@ const tutorialSchema = new Schema({
     participants: { type: [ObjectId], ref: 'User', default: [] },
     owner: { type: ObjectId, ref: 'User', required: true }
 });
+
+// (new Date()).toISOString()
 
 tutorialSchema.index({ title: 1 }, {
     unique: true,

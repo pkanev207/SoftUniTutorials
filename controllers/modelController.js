@@ -42,17 +42,18 @@ router.get('/details/:id', isUser(), async (req, res) => {
     // console.log('From detailsController >>>');
 
     course.isParticipant = false;
-
+    
     course.participants.forEach(obj => {
         if (obj._id == req.user.id) { course.isParticipant = true; }
     });
 
-    if (course.owner._id == req.user.id) {
+    if (course.owner?._id == req.user.id) {
         course.isAuthor = true;
     } else {
         course.isAuthor = false;
     }
 
+    console.log(course);
     res.render('details', { title: 'Details Page', course });
 });
 
@@ -94,7 +95,9 @@ router.post('/edit/:id', isUser(), isOwner(), async (req, res) => {
 
 
 router.get('/enroll/:id', isUser(), async (req, res) => {
-    // console.log('From enrollController >>>');
+    console.log('From enrollController >>>');
+    console.log(req.params.id);
+    console.log(req.user);
     try {
         courseServices.join(req.params.id, req.user.id);
     } catch (err) {

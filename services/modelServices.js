@@ -15,6 +15,8 @@ async function getModelAndUsers(id) {
     return Tutorial.findById(id).populate('owner').populate('participants').lean();
 }
 
+// return Model.find({}).sort({ createdAt: 1 }).lean();
+
 async function create(obj) {
     const result = new Tutorial(obj);
     await result.save();
@@ -34,12 +36,10 @@ async function update(id, obj) {
 }
 
 async function join(modelId, userId) {
-    // TODO replace with actual fields 
     const course = await Tutorial.findById(modelId);
     const user = await User.findById(userId);
-
-    console.log(course);
-    console.log(user);
+    // console.log(course);
+    // console.log(user);
 
     if (course.participants.includes(userId)) {
         throw new Error('User already is tripping!');
